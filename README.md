@@ -1,1 +1,1 @@
-This will be the README file :)
+# pyDyNet implementation in python
