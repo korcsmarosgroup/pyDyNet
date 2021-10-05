@@ -1,11 +1,12 @@
+from pyDyNet import usecases
 import argparse
 import logging
 import sys
 import os
 
 
-# if os.path.isfile('pydynet.log'):
-#     os.remove("pydynet.log")
+if os.path.isfile('pydynet.log'):
+    os.remove("pydynet.log")
 
 # Implement logging into the repository
 logging.basicConfig(filename = 'pydynet.log', format = '%(levelname)s :: %(funcName)s :: %(lineno)d :: %(message)s', level = logging.INFO)
@@ -17,11 +18,13 @@ def parse_args(args):
     help_text = \
         """
         === CLI for pyDyNet ===
-        Basic cli python script, which handles the input and output files.
+        Basic cli python script, which handles the input and output file(s).
 
         **Parameters:** 
         
         -i, --input <path>                 : specified input file path [mandatory]
+
+        -v, --visualisation <boolean>      : should the tool make visualisation or not [optional]
         
         -o, --output <path>                : specified output file path [mandatory]
 
@@ -53,7 +56,7 @@ def parse_args(args):
                         required=True)
 
     results = parser.parse_args(args)
-    return results.input_file, results.output_file
+    return results.input_file, results.vizualisation, results.output_file
 
 
 # Checking the input file is exists or not
@@ -68,10 +71,12 @@ def checking_input_file(input_file):
 # Main function for the CLI script
 def main():
 
-    input_file, output_file = parse_args(sys.argv[1:])
+    input_file, vizualisation, output_file = parse_args(sys.argv[1:])
 
     checking_input_file(input_file)
     logging.info(f"Everything is fine on the CLI level! We are happy :)")
+
+    usecases.dummy_use_case(input_file, output_file, "Yes")
 
 
 if __name__ == "__main__":
