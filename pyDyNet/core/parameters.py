@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, DefaultVal
 
 @dataclass()
 class PyDynetParameters:
