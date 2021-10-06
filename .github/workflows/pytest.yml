@@ -29,8 +29,11 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Test with pytest
+      - name: Install module
         run: |
           cd pyDyNet
-          python setup.py install
+          pip install .
+
+      - name: Test with pytest
+        run: |
           pytest
