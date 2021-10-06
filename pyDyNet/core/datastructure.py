@@ -9,7 +9,7 @@ class PyDyNet(object):
         self.ResultNetwork = None
     
     @staticmethod
-    def from_list_of_numpy_arrays(list_of_numpy_arrays):
+    def from_list_of_numpy_matrixes(list_of_numpy_arrays):
         pdn = PyDyNet()
         for npa in list_of_numpy_arrays:
             pdn.InputNetworks.append(nx.from_numpy_array(npa, create_using=nx.MultiDiGraph))
