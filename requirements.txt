@@ -1,3 +1,4 @@
 # requirements
 networkx
 pytest
+pytest-cov
