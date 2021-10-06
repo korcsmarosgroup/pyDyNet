@@ -1,4 +1,5 @@
 from ..core.datastructure import PyDyNet
+import numpy as np
 
 def test_import1():
     networks = [
