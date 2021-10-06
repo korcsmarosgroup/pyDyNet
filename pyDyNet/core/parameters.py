@@ -1,7 +1,6 @@
 from dataclasses import dataclass
-from typing_extensions import ParamSpec
 
-@dataclass(init=True)
+@dataclass()
 class PyDynetParameters:
-    Param_a: str
-    Param_b: int
+    Param_a: str = 'Param_a'
+    Param_b: int = 0
