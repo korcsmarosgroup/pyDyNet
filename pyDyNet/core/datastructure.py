@@ -1,5 +1,5 @@
 import networkx as nx
-from parameters import PyDynetParameters
+from .parameters import PyDynetParameters
 
 class PyDyNet(object):
     def __init__(self) -> None:
