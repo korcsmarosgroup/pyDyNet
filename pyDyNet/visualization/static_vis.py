@@ -1,32 +1,15 @@
-### Tools to be used
-
-import os, requests
-import time
 import matplotlib
+from matplotlib import pyplot as plt
 
+#TODO: discuss if we are going to use this doc style
 from typing import Union, Callable
 
-from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
 import networkx as nx
 
 
-### Start from an edge table
-
-edges = pd.read_csv('../rewiring_test_data/edgetable.csv')
-edges.head()
-
-### Rewiring scores are node features
-
-nodes = pd.read_csv('../rewiring_test_data/nodetable.csv')
-nodes.head()
-
-### Create network object as major expected input
-
-G = nx.from_pandas_edgelist(edges, 'source', 'target')
-G.add_nodes_from(nodes.set_index('name').to_dict('index').items())
-
+### Drawing helpers
 
 def draw_netstat_histo(
         values: list,
@@ -96,134 +79,6 @@ def draw_netstat_scatter(
     ax.spines['top'].set_visible(False)
 
     return ax
-
-
-def check_node_feature_integrity(
-        network: nx.classes.graph.Graph,
-        node_list: list
-) -> tuple:
-    """
-    Helper to check integrity between user supplied node list and the nodes
-    in the network.
-
-    Parameters
-    ----------
-    network
-        The network that will be shown
-    node_list
-        Set of nodes to show; its order matters here
-
-    Returns
-    -------
-    The (filtered) network and the reconciled list of labels.
-    """
-
-    nodes_in_network = list(network)
-
-    # As we are accepting arrays of values from outside the networkx object,
-    # implement some sort of filtering to avoid setting non-existent nodes
-    if node_list is None:
-        node_list = nodes_in_network
-    else:
-        node_list = pd.Series(node_list)
-        node_list = node_list.loc[node_list.isin(nodes_in_network)]
-        network = nx.subgraph(network, node_list)
-
-    return network, node_list
-
-
-def get_node_labels(
-        node_labels: Union[None, str, list, dict],
-        node_features: pd.DataFrame,
-        node_list: list
-) -> Union[None, dict]:
-    """
-    Helper to standardize user input of node labels.
-
-    Parameters
-    ----------
-    node_labels
-        User supplied node labels
-    node_features
-        Node features in tabular format for easier access (than the networkx format)
-    node_list
-        Set of nodes to show; its order matters here
-
-    Returns
-    -------
-    A mapping between node IDs and the labels to show.
-    """
-
-    # Node IDs might not be what we want to show, so check if user supplied custom values
-    if node_labels is not None:
-        if isinstance(node_labels, str):
-            node_labels = node_features.set_index("index").loc[:, node_labels].to_dict()
-        else:
-            if not isinstance(node_labels, dict):
-                node_labels = dict(zip(node_list, node_labels))
-    return node_labels
-
-
-def get_node_scores(
-        scores: Union[str, list],
-        node_features: pd.DataFrame,
-        node_list: list
-) -> Union[None, dict]:
-    """
-    Helper to standardize user input of node scores.
-
-    Parameters
-    ----------
-    scores
-        User supplied node weights
-    node_features
-        Node features in tabular format for easier access (than the networkx format)
-    node_list
-        Set of nodes to show; its order matters here
-
-    Returns
-    -------
-    A list of numerical values that will impact on node colors.
-    """
-
-    if isinstance(scores, str):
-        scores = node_features[scores]
-    else:
-        if isinstance(scores, dict):
-            scores = [scores[x] for x in node_list]
-
-    return scores
-
-
-def get_node_sizes(
-        node_sizes: Union[None, str, list, dict],
-        node_features: pd.DataFrame,
-        node_list: list
-) -> Union[None, dict]:
-    """
-    Helper to standardize user input of node size weights.
-
-    Parameters
-    ----------
-    node_sizes
-        User supplied value if node size correspond to something else than degree
-    node_features
-        Node features in tabular format for easier access (than the networkx format)
-    node_list
-        Set of nodes to show; its order matters here
-
-    Returns
-    -------
-    A list of numerical values that will impact on node colors.
-    """
-
-    if isinstance(node_sizes, str):
-        node_sizes = node_features[node_sizes]
-    else:
-        if isinstance(node_sizes, dict):
-            node_sizes = [node_sizes[x] for x in node_list]
-
-    return node_sizes
 
 
 def draw_static_network(
@@ -339,6 +194,138 @@ def draw_static_network(
     ax.axis('off')
 
     return ax
+
+
+### Argument parsing helpers
+
+def check_node_feature_integrity(
+        network: nx.classes.graph.Graph,
+        node_list: list
+) -> tuple:
+    """
+    Helper to check integrity between user supplied node list and the nodes
+    in the network.
+
+    Parameters
+    ----------
+    network
+        The network that will be shown
+    node_list
+        Set of nodes to show; its order matters here
+
+    Returns
+    -------
+    The (filtered) network and the reconciled list of labels.
+    """
+
+    nodes_in_network = list(network)
+
+    # As we are accepting arrays of values from outside the networkx object,
+    # implement some sort of filtering to avoid setting non-existent nodes
+    if node_list is None:
+        node_list = nodes_in_network
+    else:
+        node_list = pd.Series(node_list)
+        node_list = node_list.loc[node_list.isin(nodes_in_network)]
+        network = nx.subgraph(network, node_list)
+
+    return network, node_list
+
+
+def get_node_labels(
+        node_labels: Union[None, str, list, dict],
+        node_features: pd.DataFrame,
+        node_list: list
+) -> Union[None, dict]:
+    """
+    Helper to standardize user input of node labels.
+
+    Parameters
+    ----------
+    node_labels
+        User supplied node labels
+    node_features
+        Node features in tabular format for easier access (than the networkx format)
+    node_list
+        Set of nodes to show; its order matters here
+
+    Returns
+    -------
+    A mapping between node IDs and the labels to show.
+    """
+
+    # Node IDs might not be what we want to show, so check if user supplied custom values
+    if node_labels is not None:
+        if isinstance(node_labels, str):
+            node_labels = node_features.set_index("index").loc[:, node_labels].to_dict()
+        else:
+            if not isinstance(node_labels, dict):
+                node_labels = dict(zip(node_list, node_labels))
+    return node_labels
+
+
+def get_node_scores(
+        scores: Union[str, list],
+        node_features: pd.DataFrame,
+        node_list: list
+) -> Union[None, dict]:
+    """
+    Helper to standardize user input of node scores.
+
+    Parameters
+    ----------
+    scores
+        User supplied node weights
+    node_features
+        Node features in tabular format for easier access (than the networkx format)
+    node_list
+        Set of nodes to show; its order matters here
+
+    Returns
+    -------
+    A list of numerical values that will impact on node colors.
+    """
+
+    if isinstance(scores, str):
+        scores = node_features[scores]
+    else:
+        if isinstance(scores, dict):
+            scores = [scores[x] for x in node_list]
+
+    return scores
+
+
+### Main, high-level wrapper
+
+def get_node_sizes(
+        node_sizes: Union[None, str, list, dict],
+        node_features: pd.DataFrame,
+        node_list: list
+) -> Union[None, dict]:
+    """
+    Helper to standardize user input of node size weights.
+
+    Parameters
+    ----------
+    node_sizes
+        User supplied value if node size correspond to something else than degree
+    node_features
+        Node features in tabular format for easier access (than the networkx format)
+    node_list
+        Set of nodes to show; its order matters here
+
+    Returns
+    -------
+    A list of numerical values that will impact on node colors.
+    """
+
+    if isinstance(node_sizes, str):
+        node_sizes = node_features[node_sizes]
+    else:
+        if isinstance(node_sizes, dict):
+            node_sizes = [node_sizes[x] for x in node_list]
+
+    return node_sizes
 
 
 def draw_static_network_overview(
