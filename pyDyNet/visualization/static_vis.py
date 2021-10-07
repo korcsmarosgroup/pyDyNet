@@ -1,11 +1,6 @@
 ### Tools to be used
-
-import os, requests
-import time
 import matplotlib
-
 from typing import Union, Callable
-
 from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
