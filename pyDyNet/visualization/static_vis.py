@@ -419,5 +419,6 @@ def draw_static_network_overview(
         )
 
     fig.suptitle(main_title)
+    plt.savefig("static_net.png")
 
     return axs
