@@ -14,8 +14,8 @@ for filename in os.listdir("."):
 
 def test_draw_static_network_overview():
 
-    edges = pd.read_csv('../tests/edgetable.txt')
-    nodes = pd.read_csv('../tests/nodetable.txt')
+    edges = pd.read_csv('pyDyNet/tests/edgetable.txt')
+    nodes = pd.read_csv('pyDyNet/tests/nodetable.txt')
     G = nx.from_pandas_edgelist(edges, 'source', 'target')
     G.add_nodes_from(nodes.set_index('name').to_dict('index').items())
 
