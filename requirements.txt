@@ -3,3 +3,7 @@ networkx
 pytest
 pytest-cov
 numpy
+pandas
+pyvis
+matplotlib
+typing
