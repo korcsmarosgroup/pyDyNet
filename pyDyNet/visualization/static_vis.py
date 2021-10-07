@@ -9,18 +9,18 @@ import networkx as nx
 
 ### Start from an edge table
 
-edges = pd.read_csv('../rewiring_test_data/edgetable.csv')
-edges.head()
+#edges = pd.read_csv('../rewiring_test_data/edgetable.csv')
+#edges.head()
 
 ### Rewiring scores are node features
 
-nodes = pd.read_csv('../rewiring_test_data/nodetable.csv')
-nodes.head()
+#nodes = pd.read_csv('../rewiring_test_data/nodetable.csv')
+#nodes.head()
 
 ### Create network object as major expected input
 
-G = nx.from_pandas_edgelist(edges, 'source', 'target')
-G.add_nodes_from(nodes.set_index('name').to_dict('index').items())
+#G = nx.from_pandas_edgelist(edges, 'source', 'target')
+#G.add_nodes_from(nodes.set_index('name').to_dict('index').items())
 
 
 def draw_netstat_histo(
