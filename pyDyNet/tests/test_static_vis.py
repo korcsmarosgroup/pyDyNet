@@ -22,6 +22,7 @@ def test_draw_static_network_overview():
     G.add_nodes_from(nodes.set_index('Unnamed: 0').to_dict('index').items())
 
     results = draw_static_network_overview(G, main_title="An example plot of corrected scores")
+    result = results[0, 0]
     
     assert isinstance(result, plt.axes)
 
@@ -33,7 +34,7 @@ def test_vis_static():
     G = nx.from_pandas_edgelist(edges, 'source', 'target')
     G.add_nodes_from(nodes.set_index('Unnamed: 0').to_dict('index').items())
 
-    results = vis_static(G)
+    vis_static(G, "test_static.png")
     png_counter = 0
 
     for filename in os.listdir("."):
