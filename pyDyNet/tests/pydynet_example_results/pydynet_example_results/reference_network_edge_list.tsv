@@ -1,0 +1,16 @@
+source	target
+C	D
+C	C
+C	B
+C	A
+C	E
+D	A
+D	D
+D	B
+D	E
+E	E
+E	A
+E	B
+A	B
+A	A
+B	B

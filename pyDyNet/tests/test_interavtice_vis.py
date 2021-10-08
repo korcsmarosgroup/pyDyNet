@@ -1,8 +1,9 @@
 import os
+import pandas as pd
 
 
-from ..visualization.interactive_vis import convert_input_data
-from ..visualization.interactive_vis import draw_interactive_network
+from ..visualization.interactive_vis import _convert_input_data
+from ..visualization.interactive_vis import _draw_interactive_network
 
 for filename in os.listdir("."):
     
@@ -11,21 +12,19 @@ for filename in os.listdir("."):
 
 
 def test_convert_input_data():
+    node_df = pd.read_csv('pydynet_example_results/pydynet_example_results/node_dn_scores.tsv', sep='\t', index_col=0)
+    edge_df = pd.read_csv('pydynet_example_results/pydynet_example_results/reference_network_edge_list.tsv', sep='\t')
+    results = _convert_input_data(node_df, edge_df)
 
-    nodetable = "pyDyNet/tests/vis_tests_files/nodetable.txt"
-    edgetable = "pyDyNet/tests/vis_tests_files/edgetable.txt"
-    results = convert_input_data(nodetable, edgetable)
-
-    assert list(results.nodes) == [36, 50, 7, 49, 43, 47, 33, 31, 45, 44, 24, 19, 23, 17, 14, 42, 32, 28, 27, 11, 41, 34, 40, 35, 39, 16, 38, 30, 37, 21, 22, 12, 9, 29, 2, 10, 26, 25, 15, 8, 20, 48, 18, 4, 6, 13, 3, 46, 1, 5]
-
+    assert list(results.nodes) == ['C', 'D', 'B', 'A', 'E']
 
 def test_draw_interactive_network():
 
-    nodetable = "pyDyNet/tests/vis_tests_files/nodetable.txt"
-    edgetable = "pyDyNet/tests/vis_tests_files/edgetable.txt"
-    results = convert_input_data(nodetable, edgetable)
+    node_df = pd.read_csv('pydynet_example_results/pydynet_example_results/node_dn_scores.tsv', sep='\t', index_col=0)
+    edge_df = pd.read_csv('pydynet_example_results/pydynet_example_results/reference_network_edge_list.tsv', sep='\t')
+    results = _convert_input_data(node_df, edge_df)
 
-    html_results = draw_interactive_network(results, 800, 800, "output")
+    html_results = _draw_interactive_network(results, 800, 800, "output")
     html_counter = 0
 
     for filename in os.listdir("."):
