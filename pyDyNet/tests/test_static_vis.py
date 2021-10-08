@@ -1,9 +1,12 @@
 import os
 
-
 import pandas as pd
 import networkx as nx
+
+from matplotlib import pyplot as plt
+
 from ..visualization.static_vis import draw_static_network_overview
+from ..visualization.static_vis import vis_static
 
 for filename in os.listdir("."):
     
@@ -19,14 +22,8 @@ def test_draw_static_network_overview():
     G.add_nodes_from(nodes.set_index('name').to_dict('index').items())
 
     results = draw_static_network_overview(G, node_sizes = "Dn-Score (degree corrected)", main_title="An example plot of corrected scores")
-    png_counter = 0
-
-    for filename in os.listdir("."):
-
-        if filename.endswith("png"):
-            png_counter += 1
-
-    assert png_counter == 1
+    
+    assert isinstance(result, plt.axes)
 
 
 def test_vis_static():

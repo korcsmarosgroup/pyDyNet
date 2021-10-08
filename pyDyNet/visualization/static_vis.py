@@ -199,7 +199,7 @@ def draw_static_network(
     if ax is None:
         fig, ax = plt.subplots()
     else:
-        fig =ax.get_figure()
+        fig = ax.get_figure()
     ax.set_title(graph_title)
 
     # Finally, draw the network graph
