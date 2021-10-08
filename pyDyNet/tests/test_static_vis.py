@@ -3,7 +3,6 @@ import os
 
 import pandas as pd
 import networkx as nx
-from ..visualization.interactive_vis import convert_input_data
 from ..visualization.static_vis import draw_static_network_overview
 
 for filename in os.listdir("."):
