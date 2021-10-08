@@ -34,7 +34,7 @@ def test_vis_static():
     edges = pd.read_csv('pyDyNet/tests/pydynet_example_results/pydynet_example_results/reference_network_edge_list.tsv', sep="\t")
     nodes = pd.read_csv('pyDyNet/tests/pydynet_example_results/pydynet_example_results/node_dn_scores.tsv', sep="\t")
     G = nx.from_pandas_edgelist(edges, 'source', 'target')
-    G.add_nodes_from(nodes.set_index('Unamed: 0').to_dict('index').items())
+    G.add_nodes_from(nodes.set_index('Unnamed: 0').to_dict('index').items())
 
     results = vis_static(G)
     png_counter = 0
