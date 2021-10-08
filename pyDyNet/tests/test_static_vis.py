@@ -31,8 +31,8 @@ def test_draw_static_network_overview():
 
 def test_vis_static():
 
-    edges = pd.read_csv('pyDyNet/pyDyNet/tests/pydynet_example_results/pydynet_example_results/reference_network_edge_list.tsv')
-    nodes = pd.read_csv('pyDyNet/pyDyNet/tests/pydynet_example_results/pydynet_example_results/node_dn_scores.tsv')
+    edges = pd.read_csv('pyDyNet/tests/pydynet_example_results/pydynet_example_results/reference_network_edge_list.tsv')
+    nodes = pd.read_csv('pyDyNet/tests/pydynet_example_results/pydynet_example_results/node_dn_scores.tsv')
     G = nx.from_pandas_edgelist(edges, 'source', 'target')
     G.add_nodes_from(nodes.set_index('Unamed: 0').to_dict('index').items())
 
