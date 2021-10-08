@@ -437,9 +437,7 @@ def draw_static_network_overview(
     A tuple of matplotlib axes.
     """
 
-    node_list = None
-    if node_features is None:
-        node_features = nx_node_features_to_pd(network)
+    network, node_features, node_list = filter_graph_by_nodes(network, node_features)
 
     # If some descriptive stats for scores and degrees are to be shown, it makes sense to access them now
     if show_stats:
