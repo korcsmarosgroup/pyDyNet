@@ -1,9 +1,8 @@
 import os
+import matplotlib
 
 import pandas as pd
 import networkx as nx
-
-from matplotlib import pyplot as plt
 
 from ..visualization.static_vis import draw_static_network_overview
 from ..visualization.static_vis import vis_static
@@ -24,7 +23,7 @@ def test_draw_static_network_overview():
     results = draw_static_network_overview(G, main_title="An example plot of corrected scores")
     result = results[0, 0]
     
-    assert isinstance(result, plt.axes)
+    assert result.__class__.__name__ == 'AxesSubplot'
 
 
 def test_vis_static():

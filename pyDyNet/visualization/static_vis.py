@@ -353,7 +353,7 @@ def vis_static(
         show_stats=show_stats, figsize=figsize
      )
     
-    fig = axs.flatten()[0].get_figure()
+    fig = axs.flatten()[-1].get_figure()
     fig.savefig(out_filename)
 
     return
