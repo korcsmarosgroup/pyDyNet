@@ -16,12 +16,12 @@ for filename in os.listdir("."):
 
 def test_draw_static_network_overview():
 
-    edges = pd.read_csv('pyDyNet/tests/vis_tests_files/edgetable.txt')
-    nodes = pd.read_csv('pyDyNet/tests/vis_tests_files/nodetable.txt')
+    edges = pd.read_csv('pyDyNet/tests/pydynet_example_results/pydynet_example_results/reference_network_edge_list.tsv', sep="\t")
+    nodes = pd.read_csv('pyDyNet/tests/pydynet_example_results/pydynet_example_results/node_dn_scores.tsv', sep="\t")
     G = nx.from_pandas_edgelist(edges, 'source', 'target')
-    G.add_nodes_from(nodes.set_index('name').to_dict('index').items())
+    G.add_nodes_from(nodes.set_index('Unnamed: 0').to_dict('index').items())
 
-    results = draw_static_network_overview(G, node_sizes = "Dn-Score (degree corrected)", main_title="An example plot of corrected scores")
+    results = draw_static_network_overview(G, main_title="An example plot of corrected scores")
     
     assert isinstance(result, plt.axes)
 
