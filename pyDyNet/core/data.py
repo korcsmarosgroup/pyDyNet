@@ -2,7 +2,7 @@ import pandas as pd
 import networkx as nx
 import numpy as np
 from os import listdir
-from typing import Tuple, List, Optional
+from typing import Tuple, List, Optional, Union
 from os.path import isfile, join, basename
 from .exception_handler import UnImplementedFileFormat, IncompatibleDataType, UnknownWeightType, NetworkNotInitialized, \
     GraphTypeIncompatible
@@ -121,9 +121,9 @@ class MultiNetworks:
 
     @staticmethod
     def _load_matrices(file_path: str,
-                       sep: str = "\t") -> pd.DataFrame:
+                       sep: str = "\t") -> np.ndarray:
         """ Load in a matrix """
-        return pd.read_csv(file_path, sep=sep)
+        return pd.read_csv(file_path, sep=sep, header=None).values
     
     @staticmethod
     def iter_pandas_to_array(matrix_df_list: list) -> list:

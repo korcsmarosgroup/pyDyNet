@@ -61,12 +61,13 @@ def test_load_adjacency_matrix(data_dir):
     """ A test for loading a directory of adjacency matrices"""
     example_adjacency_matrices_dir = os.path.join(data_dir, "adjacency_matrices")
     mn = MultiNetworks()
-    mn.load_adjacency_matrix(example_adjacency_matrices_dir, sep='\t', graph_type="directed")
+    mn.load_adjacency_matrix(example_adjacency_matrices_dir, sep=',', graph_type="directed")
     actual_matrix = mn.get_adjacency_matrices(weight_type="edge")
-    expected_matrix = np.loadtxt(example_adjacency_matrices_dir)
+    expected_case_file_path = os.path.join(example_adjacency_matrices_dir, 'patient_1_adj_mat.csv')
+    expected_matrix = np.loadtxt(expected_case_file_path, delimiter=',')
     assert len(actual_matrix) == 2
-    assert np.array(actual_matrix).shape == (2, 4, 4)
-    assert np.allclose(expected_matrix, actual_matrix)
+    assert np.array(actual_matrix).shape == (2, 3, 3)
+    assert np.allclose(expected_matrix, actual_matrix[1])
 
 
 def test_incompatible_graph_type():
