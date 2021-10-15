@@ -119,4 +119,7 @@ def test_calculate_dn_corrected_score(create_network):
     actual_n_edges = get_n_edges(network=mn.reference_network)
     actual_dn_degree_corrected_scores = calculate_dn_corrected_score(dn_scores=EXPECTED_DN_SCORES,
                                                                      n_edges=actual_n_edges)
-    assert actual_dn_degree_corrected_scores == EXPECTED_DN_CORRECTED_SCORES
+    actual_dn_degree_corrected_scores = np.array(list(actual_dn_degree_corrected_scores.items()))
+    expected_dn_corrected_scores = np.array(list(EXPECTED_DN_CORRECTED_SCORES.items()))
+    assert np.allclose(np.around(actual_dn_degree_corrected_scores, 2),
+                       np.around(expected_dn_corrected_scores, 2))
