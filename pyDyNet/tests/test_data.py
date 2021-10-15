@@ -46,7 +46,6 @@ def data_dir(tmpdir, request):
     return tmpdir
 
 
-@pytest.mark.datafiles()
 def test_load_edge_list(data_dir):
     """ A test to loading a directory of edge list from files """
     example_edge_list_dir = os.path.join(data_dir, "edge_lists")
@@ -108,7 +107,7 @@ def test_create_networks_adjacency(directed_multi_network):
     assert DIRECTED_NETWORKS[0].shape == (2, 2)
 
 
-def test_create_reference_network(directed_multi_network):
+def test_create_reference_network_directed(directed_multi_network):
     """ Test of the creation of the reference network """
     mn = directed_multi_network
     mn.create_reference_network()
@@ -117,7 +116,7 @@ def test_create_reference_network(directed_multi_network):
     assert isinstance(mn.reference_network, nx.classes.graph.Graph)
 
 
-def test_create_reference_network(undirected_multi_network):
+def test_create_reference_network_undirected(undirected_multi_network):
     """ Test for the creation of the reference network """
     mn = undirected_multi_network
     mn.create_reference_network()
