@@ -109,7 +109,10 @@ def test_calculate_rewiring_score(create_network):
     actual_dn_score = calculate_rewiring_score(std_edge_weights=std_edge_weights,
                                                centroid_weights=centroid_weights,
                                                node_list=[0, 1, 2, 3, 4])
-    assert actual_dn_score == EXPECTED_DN_SCORES
+    actual_dn_score = np.array(list(actual_dn_score.items()))
+    expected_dn_score = np.array(list(EXPECTED_DN_SCORES.items()))
+    assert np.allclose(np.around(actual_dn_score, 2),
+                       np.around(expected_dn_score, 2))
 
 
 def test_calculate_dn_corrected_score(create_network):
