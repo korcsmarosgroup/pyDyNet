@@ -1,3 +1,4 @@
+from typing import Union
 import numpy as np
 import pandas as pd
 import networkx as nx
@@ -30,8 +31,10 @@ def iter_pandas_to_array(matrix_df_list: list) -> list:
     return [frame.values for frame in matrix_df_list]
 
 
-def extract_weights_across_states(adj_matrix_list: np.array) -> np.array:
+def extract_weights_across_states(adj_matrix_list: Union[np.array, list]) -> np.array:
     """ Extract each node/edge weight pair across adjancey matrices """
+    if isinstance(adj_matrix_list, list):
+        adj_matrix_list = np.array(adj_matrix_list)
     node_edge_weight = []
     for k in range(adj_matrix_list.shape[0]):
         for j in range(adj_matrix_list.shape[1]):
@@ -42,6 +45,13 @@ def extract_weights_across_states(adj_matrix_list: np.array) -> np.array:
             node_edge_weight.append(current_node_weights)
     node_edge_weight = np.array(node_edge_weight)
     return node_edge_weight
+
+
+def get_reshape_values(adj_matrix_list: Union[np.array, list]) -> tuple:
+    """ Extract the correct reshape value for the calculations """
+    if isinstance(adj_matrix_list, list):
+        adj_matrix_list = np.array(adj_matrix_list)
+    return adj_matrix_list.shape[1:3]
 
 
 def calculate_non_zero_mean(array: np.array,
