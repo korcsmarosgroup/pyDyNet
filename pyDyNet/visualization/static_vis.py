@@ -481,6 +481,7 @@ def vis_static(
         out_filename: str = "output/static_graph_overview.png",
         scores: str = "dn_score",
         node_sizes: str = "n_edges",
+        node_positions: Union[None, dict] = None,
         main_title: str = "",
         show_stats: bool = True,
         figsize: tuple = (7.2, 9.6)
@@ -498,6 +499,8 @@ def vis_static(
         The scores that will determine node colors. Has to be a column name in node features.
     node_sizes
         Name of node attribute (e.g. number of edges) that will correspond to node size.
+    node_positions
+        A mapping of node positions; fixing positions between samples can help comparison.
     main_title
         Title to be put above the whole panel.
     show_stats
@@ -511,8 +514,8 @@ def vis_static(
     """
 
     axs = draw_static_network_overview(
-        network=network, scores=scores, node_sizes=node_sizes, main_title=main_title,
-        show_stats=show_stats, figsize=figsize
+        network=network, scores=scores, node_sizes=node_sizes, node_positions=node_positions,
+        main_title=main_title, show_stats=show_stats, figsize=figsize
      )
     
     fig = axs.flatten()[-1].get_figure()
